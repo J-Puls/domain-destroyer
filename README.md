@@ -1,2 +1,2 @@
 # domain-destroyer
-A modern spin-off of the timeless Desktop Destroyer game developed by Ing. Miroslav Nemecek
+A modern spin-off of the timeless Desktop Destroyer game developed by Ing. Miroslav Nemecek, written for the web.
