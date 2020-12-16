@@ -1,6 +1,6 @@
 {
   "name": "domain-destroyer",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A modern recreation of the timeless Desktop Destroyer game developed by Ing. Miroslav Nemecek, written in TypeScript.",
   "main": "dist/index.js",
   "scripts": {
