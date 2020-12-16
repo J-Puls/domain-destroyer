@@ -2,6 +2,15 @@
 
 A modern recreation of the timeless Desktop Destroyer game developed by Ing. Miroslav Nemecek, written in TypeScript.
 
+## Controls
+
+| key       | function         |
+| --------- | ---------------- |
+| `1 key`   | **hammer**       |
+| `2 key`   | **machine gun**  |
+| `c key`   | **clear screen** |
+| `mouse 1` | **fire weapon**  |
+
 ## Installation
 
 ```bash
