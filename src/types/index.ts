@@ -10,6 +10,6 @@ export type WeaponOptions = {
 export type WeaponDetails = {
   game;
   sfx: string[];
-  sprites: { cursor: string; particle: string[] };
+  sprites: { cursor: string; particles: string[]; staticParticles: string[] };
   options?: WeaponOptions;
 };

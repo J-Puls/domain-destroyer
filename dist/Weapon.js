@@ -8,7 +8,7 @@ export class Weapon {
         this.particleOffset = options.particleOffset || 0;
         this.sfx = sfx;
         this.spriteFrames = options.spriteFrames || 1;
-        this.sprites = sprites;
+        this.sprites = Object.assign({}, sprites);
         // create the sprite view frame
         this.viewFrame = document.createElement("div");
         this.viewFrame.id = "destroyer-weapon-sprite-view-frame";

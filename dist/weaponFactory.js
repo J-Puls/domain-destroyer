@@ -12,7 +12,7 @@ const weaponData = {
     },
     machinegun: {
         name: "machinegun",
-        fireRate: 100,
+        fireRate: 85,
         animatedParticle: true,
         particleOffset: -150,
         spriteFrames: 3,

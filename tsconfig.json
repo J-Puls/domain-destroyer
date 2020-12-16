@@ -9,19 +9,5 @@
     "moduleResolution": "node",
     "allowJs": true
   },
-  "files": [
-    "src/Destroyer.ts",
-    "src/ParticleRenderer.ts",
-    "src/Weapon.ts",
-    "src/index.ts",
-    "src/interfaces/index.ts",
-    "src/sounds/index.js",
-    "src/sprites/hammer.ts",
-    "src/sprites/hammerParticles.ts",
-    "src/sprites/machinegun.ts",
-    "src/sprites/machinegunParticles.ts",
-    "src/sprites/index.ts",
-    "src/types/index.ts",
-    "src/weaponFactory.ts"
-  ]
+  "include": ["src/**/*"]
 }

@@ -12,7 +12,7 @@ export class Weapon implements Sprite, WeaponObject {
   viewFrame: HTMLDivElement;
   sfx: string[];
   spriteFrames: number;
-  sprites: { cursor: string; particle: string[] };
+  sprites: { cursor: string; particles: string[]; staticParticles: string[] };
 
   constructor(game, sfx, sprites, options: WeaponOptions) {
     // instantiate object details
@@ -23,7 +23,7 @@ export class Weapon implements Sprite, WeaponObject {
     this.particleOffset = options.particleOffset || 0;
     this.sfx = sfx;
     this.spriteFrames = options.spriteFrames || 1;
-    this.sprites = sprites;
+    this.sprites = { ...sprites };
 
     // create the sprite view frame
     this.viewFrame = document.createElement("div");
