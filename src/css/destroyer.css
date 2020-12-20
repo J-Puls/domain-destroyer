@@ -6,9 +6,8 @@
   --fire-rate: 1;
 }
 
-.root {
+.destroyer-parent {
   height: 100%;
-  background-color: dodgerblue;
 }
 
 .destroyer-container {

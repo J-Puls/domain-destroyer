@@ -1,21 +1,18 @@
-import ParticleRenderer from "./ParticleRenderer";
 import weaponFactory from "./weaponFactory";
-import { Howl, Howler } from "howler";
-const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
+import { Howler } from "howler";
 export class Destroyer {
     constructor(parent, zIndStart, options) {
+        this.parent = parent;
+        this.parent.classList.add("destroyer-parent");
         this.volume = 1;
         this.particleLimit = options.particleLimit || 100;
         this.isFiring = false;
         // generate weapon objects and set default
-        const weaponsList = weaponFactory(this);
+        this.weaponsList = weaponFactory(this);
         this.currentWeaponID = 0;
-        this.currentWeapon = weaponsList[this.currentWeaponID];
+        this.currentWeapon = this.weaponsList[this.currentWeaponID];
         // initiate cursor in center of parent
         this.mousePos = { x: parent.clientWidth / 2, y: parent.clientHeight / 2 };
-        const particleRenderer = new ParticleRenderer(this);
         this.drawingLayer = document.createElement("canvas");
         this.drawingLayer.id = "destroyer-drawing-layer";
         this.drawingLayer.className = "destroyer-canvas drawing-layer";
@@ -69,7 +66,7 @@ export class Destroyer {
             this.updateCurrentWeapon();
         };
         this.weaponUp = () => {
-            if (this.currentWeaponID === weaponsList.length - 1)
+            if (this.currentWeaponID === this.weaponsList.length - 1)
                 return;
             this.currentWeaponID++;
             this.updateCurrentWeapon();
@@ -81,7 +78,7 @@ export class Destroyer {
             this.updateCurrentWeapon();
         };
         this.updateCurrentWeapon = () => {
-            this.currentWeapon = weaponsList[this.currentWeaponID];
+            this.currentWeapon = this.weaponsList[this.currentWeaponID];
             this.updateCSS();
         };
         // delete all particles currently rendered
@@ -95,39 +92,6 @@ export class Destroyer {
             parent.style.setProperty("--wpn-sprite-x", `${e.clientX - 75}px`);
             parent.style.setProperty("--wpn-sprite-y", `${e.clientY - 75}px`);
         };
-        // generate a particle and play sound effect
-        this.fire = async () => {
-            const coords = Object.assign({}, this.mousePos);
-            const partLayer = this.particleLayer;
-            // calculate where the cursor is horizontally on a scale of -1 to 1 for spacial audio
-            const stereoPosition = ((Math.round(parent.clientWidth / 2) - this.mousePos.x) /
-                parent.clientWidth) *
-                2;
-            // sound effect must be generated here to play nice with browser autoplay rules
-            const soundEffect = new Howl({
-                src: [
-                    `${this.currentWeapon.sfx[Math.floor(Math.random() * this.currentWeapon.sfx.length)]}`,
-                ],
-                autoplay: true,
-                stereo: -stereoPosition,
-            });
-            // play the sound effect and render a particle
-            soundEffect.play();
-            // pick a random particle sprite for the current weapon
-            const particleNumber = Math.floor(Math.random() * this.currentWeapon.sprites.particles.length);
-            const staticParticle = new Image();
-            staticParticle.src = this.currentWeapon.sprites.staticParticles[particleNumber];
-            // if particle limit has been reached, remove the oldest particle
-            if (partLayer.children.length >= this.particleLimit) {
-                partLayer.removeChild(partLayer.firstChild);
-            }
-            const particle = particleRenderer.spawn(particleNumber, coords);
-            this.particleLayer.appendChild(particle);
-            // wait for the animation to finish, then remove the particle
-            await sleep(250);
-            this.particleLayer.removeChild(particle);
-            this.drawingCTX.drawImage(staticParticle, coords.x + this.currentWeapon.particleOffset - 75, coords.y + this.currentWeapon.particleOffset - 75);
-        };
         // begins firing
         const handleMouseDown = () => {
             this.isFiring = true;
@@ -136,12 +100,12 @@ export class Destroyer {
             // if the weapon fire interval is greater than 1, begin a rapid firing loop, else fire one shot and stop.
             if (this.currentWeapon.animationCount !== 1) {
                 const fireInterval = setInterval(() => {
-                    this.fire();
+                    this.currentWeapon.fire();
                 }, this.currentWeapon.fireRate);
                 this.cursorLayer.addEventListener("mouseup", () => handleMouseUp(fireInterval));
             }
             else {
-                this.fire();
+                this.currentWeapon.fire();
                 this.cursorLayer.addEventListener("mouseup", () => handleMouseUp());
             }
         };
@@ -165,6 +129,7 @@ export class Destroyer {
                 c: 99,
                 one: 49,
                 two: 50,
+                three: 51,
                 minus: 45,
                 plus: 61,
                 semicolon: 59,
@@ -172,11 +137,18 @@ export class Destroyer {
             };
             switch (code) {
                 case keys.one:
-                    this.currentWeapon = weaponsList[0];
+                    this.currentWeaponID = 0;
+                    this.updateCurrentWeapon();
                     this.updateCSS();
                     break;
                 case keys.two:
-                    this.currentWeapon = weaponsList[1];
+                    this.currentWeaponID = 1;
+                    this.updateCurrentWeapon();
+                    this.updateCSS();
+                    break;
+                case keys.three:
+                    this.currentWeaponID = 2;
+                    this.updateCurrentWeapon();
                     this.updateCSS();
                     break;
                 case keys.c:
@@ -203,10 +175,10 @@ export class Destroyer {
             // force parent relative to align layers and remove the default cursor
             parent.style.position = "relative";
             parent.style.cursor = "none";
-            // pack the cursor sprite into the cursor layer for rendering
-            this.cursorLayer.appendChild(this.currentWeapon.spawn());
             // set up CSS variables
             this.updateCSS();
+            // pack the cursor sprite into the cursor layer for rendering
+            this.cursorLayer.appendChild(this.currentWeapon.spawn());
             // initiate listeners for cursor and key actions
             this.cursorLayer.addEventListener("mousemove", (e) => handleMouseMove(e));
             this.cursorLayer.addEventListener("mousedown", () => handleMouseDown());

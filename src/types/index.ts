@@ -3,13 +3,14 @@ export type WeaponOptions = {
   animationCount: number;
   fireRate: number;
   name: string;
-  particleOffset: number;
+  particleAnimationDuration: number;
+  particleOffset: { x: number; y: number };
   spriteFrames: number;
 };
 
 export type WeaponDetails = {
   game;
+  options?: WeaponOptions;
   sfx: string[];
   sprites: { cursor: string; particles: string[]; staticParticles: string[] };
-  options?: WeaponOptions;
 };

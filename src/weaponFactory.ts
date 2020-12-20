@@ -1,25 +1,7 @@
 import Weapon from "./Weapon";
 import sprites from "./sprites";
 import sounds from "./sounds";
-
-const weaponData = {
-  hammer: {
-    name: "hammer",
-    fireRate: 50,
-    animatedParticle: true,
-    particleOffset: -50,
-    spriteFrames: 2,
-    animationCount: 1,
-  },
-  machinegun: {
-    name: "machinegun",
-    fireRate: 85,
-    animatedParticle: true,
-    particleOffset: -150,
-    spriteFrames: 3,
-    animationCount: "infinite",
-  },
-};
+import weaponData from "./weapons";
 
 export const weaponFactory = (game) => {
   const weaponsList = [] as Weapon[];

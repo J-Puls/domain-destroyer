@@ -1,18 +1,25 @@
 import hammer from "./hammer";
-import hammerParticle from "./hammerParticles";
+import hammerParticles from "./hammerParticles";
 import machinegun from "./machinegun";
-import machinegunParticle from "./machinegunParticles";
+import machinegunParticles from "./machinegunParticles";
+import stamp from "./stamp";
+import stampParticles from "./stampParticles";
 import staticSprites from "./staticSprites";
 const sprites = {
     hammer: {
         cursor: hammer,
-        particles: hammerParticle,
+        particles: hammerParticles,
         staticParticles: staticSprites.hammer,
     },
     machinegun: {
         cursor: machinegun,
-        particles: machinegunParticle,
+        particles: machinegunParticles,
         staticParticles: staticSprites.machinegun,
+    },
+    stamp: {
+        cursor: stamp,
+        particles: stampParticles,
+        staticParticles: staticSprites.stamp,
     },
 };
 export default sprites;
