@@ -173,7 +173,7 @@ export class Destroyer {
         // layers must be injected into parent to begin rendering process
         this.inject = () => {
             // force parent relative to align layers and remove the default cursor
-            parent.style.position = "relative";
+            parent.style.position = "fixed";
             parent.style.cursor = "none";
             // set up CSS variables
             this.updateCSS();
@@ -187,6 +187,17 @@ export class Destroyer {
             parent.appendChild(this.drawingLayer);
             parent.appendChild(this.particleLayer);
             parent.appendChild(this.cursorLayer);
+        };
+        this.selfDestruct = () => {
+            parent.style.cursor = "default";
+            // initiate listeners for cursor and key actions
+            this.cursorLayer.removeEventListener("mousemove", (e) => handleMouseMove(e));
+            this.cursorLayer.removeEventListener("mousedown", () => handleMouseDown());
+            document.removeEventListener("keypress", (e) => handleKeyDown(e));
+            // remove layers into the parent element
+            parent.removeChild(this.drawingLayer);
+            parent.removeChild(this.particleLayer);
+            parent.removeChild(this.cursorLayer);
         };
     }
 }

@@ -8,6 +8,7 @@
 
 .destroyer-parent {
   height: 100%;
+  position: fixed;
 }
 
 .destroyer-container {
