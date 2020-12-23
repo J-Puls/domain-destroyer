@@ -1,6 +1,6 @@
 # domain-destroyer
 
-A modern recreation of the timeless Desktop Destroyer game developed by Ing. Miroslav Nemecek, written in TypeScript.
+A modern recreation of the timeless Desktop Destroyer game developed by Miroslav Němeček, written in TypeScript.
 
 ## Controls
 
