@@ -188,13 +188,14 @@ export class Destroyer {
             parent.appendChild(this.particleLayer);
             parent.appendChild(this.cursorLayer);
         };
+        // remove all rendered content from the page, state is maintained behind the scenes and can be re-injected
         this.selfDestruct = () => {
             parent.style.cursor = "default";
-            // initiate listeners for cursor and key actions
+            // remove listeners for cursor and key actions
             this.cursorLayer.removeEventListener("mousemove", (e) => handleMouseMove(e));
             this.cursorLayer.removeEventListener("mousedown", () => handleMouseDown());
             document.removeEventListener("keypress", (e) => handleKeyDown(e));
-            // remove layers into the parent element
+            // remove layers from the parent element
             parent.removeChild(this.drawingLayer);
             parent.removeChild(this.particleLayer);
             parent.removeChild(this.cursorLayer);
