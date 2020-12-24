@@ -9,6 +9,7 @@ A modern recreation of the timeless Desktop Destroyer game developed by Miroslav
 | `mouse` | **fire weapon**     |
 | `1 key` | **hammer**          |
 | `2 key` | **machine gun**     |
+| `3 key` | **stamp**           |
 | `c key` | **clear screen**    |
 | `- key` | **previous weapon** |
 | `= key` | **next weapon**     |
@@ -32,7 +33,7 @@ import Destroyer from "domain-destroyer";
 - Import the included CSS file
 
 ```javascript
-import "domain-destroyer/dist/css/destroyer/min.css";
+import "domain-destroyer/dist/css/destroyer.min.css";
 ```
 
 ## API Description
@@ -46,7 +47,7 @@ The **`Destroyer`** constructor takes three arguments:
 - **`options`**: `object` - optional parameters for controlling different aspects of the game upon instantiation
   - **`particleLimit`**: `number` - the maximum number of particles allowed to exist at one time (only effects the animation phase of rendering, not how many particles are persisted on screen)
 
-Once instantiated, you will have access to the following properties and methods:
+Once instantiated, you will have access to the following noteworthy properties and methods:
 
 | property              | description                                                                                                                                                   |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -98,7 +99,7 @@ export const App = () => {
   let myParent;
   const [destroyer, setDestroyer] = useState(null);
   useEffect(() => {
-    myParent && setDestroyer(new Destroyer(myParent, 5, { particleLimit: 50 }));
+    myParent && setDestroyer(new Destroyer(myParent, 5, { particleLimit: 20 }));
   }, [myParent]);
 
   useEffect(() => {
