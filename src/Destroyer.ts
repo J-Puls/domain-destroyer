@@ -50,23 +50,19 @@ export class Destroyer {
     this.drawingLayer = document.createElement("canvas");
     this.drawingLayer.id = "destroyer-drawing-layer";
     this.drawingLayer.className = "destroyer-canvas drawing-layer";
-    this.drawingLayer.style.zIndex = `${zIndStart}`;
     this.drawingLayer.width = parent.clientWidth;
     this.drawingLayer.height = parent.clientHeight;
-    this.drawingLayer.style.zIndex = `${zIndStart}`;
     this.drawingCTX = this.drawingLayer.getContext("2d");
 
     // create div container to hold particles
     this.particleLayer = document.createElement("div");
     this.particleLayer.id = "destroyer-particle-layer";
     this.particleLayer.className = "destroyer-container particle-layer";
-    this.particleLayer.style.zIndex = `${zIndStart + 1}`;
 
     // create div container to hold cursor
     this.cursorLayer = document.createElement("div");
     this.cursorLayer.id = "destroyer-sprite-layer";
     this.cursorLayer.className = "destroyer-container sprite-layer";
-    this.cursorLayer.style.zIndex = `${zIndStart + 1}`;
 
     // update css variables
     this.updateCSS = () => {
@@ -242,8 +238,9 @@ export class Destroyer {
     this.inject = () => {
       // force parent relative to align layers and remove the default cursor
       parent.style.position = "fixed";
-      parent.style.zIndex = `${zIndStart}`;
       parent.style.cursor = "none";
+      parent.style.setProperty("--z-index-start", `${zIndStart}`);
+
       // set up CSS variables
       this.updateCSS();
 

@@ -44,13 +44,11 @@ export class Weapon implements WeaponObject {
     this.viewFrame = document.createElement("div");
     this.viewFrame.id = "destroyer-weapon-sprite-view-frame";
     this.viewFrame.className = `destroyer-sprite weapon-sprite-view-frame`;
-    this.viewFrame.style.zIndex = `${game.zIndStart + 2}`;
 
     // create the spritesheet renderer
     this.spriteRenderer = document.createElement("div");
     this.spriteRenderer.id = "destroyer-weapon-sprite-renderer";
     this.spriteRenderer.className = `destroyer-sprite weapon-sprite-renderer`;
-    this.spriteRenderer.style.zIndex = `${game.zIndStart + 3}`;
 
     // pack the renderer into the view frame
     this.spawn = () => {

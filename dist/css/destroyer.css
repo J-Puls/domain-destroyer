@@ -6,6 +6,7 @@
   --wpn-sprite-url: none;
   --wpn-sprite-frames: 1;
   --fire-rate: 1;
+  --z-index-start: 1;
 }
 
 .destroyer-parent {
@@ -41,6 +42,10 @@
     background-position: -750px;
   }
 }
+.sprite-layer {
+  user-select: none;
+  z-index: calc(var(--z-index-start) + 2);
+}
 
 .weapon-sprite-view-frame {
   position: relative;
@@ -49,6 +54,7 @@
   left: var(--wpn-sprite-x);
   top: var(--wpn-sprite-y);
   overflow: hidden;
+  z-index: calc(var(--z-index-start) + 3);
 }
 
 .weapon-sprite-renderer {
@@ -63,10 +69,7 @@
   image-rendering: -o-pixelated;
   image-rendering: pixelated;
   pointer-events: none;
-}
-
-.sprite-layer {
-  user-select: none;
+  z-index: calc(var(--z-index-start) + 4);
 }
 
 .sprite-layer.animating > .weapon-sprite-view-frame > .weapon-sprite-renderer {
@@ -78,11 +81,16 @@
   animation-iteration-count: var(--animation-count);
 }
 
+.particle-layer {
+  z-index: calc(var(--z-index-start) + 1);
+}
+
 .particle-sprite-view-frame {
   position: absolute;
   width: 150px;
   height: 150px;
   overflow: hidden;
+  z-index: calc(var(--z-index-start) + 1);
 }
 
 .particle-sprite-renderer {
@@ -100,4 +108,9 @@
   animation: particle 0.25s steps(5) normal forwards;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
+  z-index: calc(var(--z-index-start) + 2);
+}
+
+.drawing-layer {
+  z-index: var(--z-index-start);
 }

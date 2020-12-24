@@ -21,7 +21,6 @@ export class Particle {
     this.viewFrame = document.createElement("div");
     this.viewFrame.id = "destroyer-particle-sprite-view-frame";
     this.viewFrame.className = `destroyer-sprite particle-sprite-view-frame`;
-    this.viewFrame.style.zIndex = `${game.zIndStart + 1}`;
     this.viewFrame.style.top = `${coords.y - 75 + offset.y}px`;
     this.viewFrame.style.left = `${coords.x - 75 + offset.x}px`;
 
@@ -30,7 +29,6 @@ export class Particle {
     this.spriteRenderer.id = "destroyer-particle-spriteRenderer";
     this.spriteRenderer.className = `destroyer-sprite particle-sprite-renderer`;
     this.spriteRenderer.style.backgroundImage = `url(${sprites.animated})`;
-    this.spriteRenderer.style.zIndex = `${game.zIndStart + 2}`;
 
     // calculate where the sound origin is relative to the center of the viewport (-1 to 1)
     this.getStereoLocation = (coords) => {
