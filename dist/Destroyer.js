@@ -2,10 +2,11 @@ import weaponFactory from "./weaponFactory";
 import { Howler } from "howler";
 export class Destroyer {
     constructor(parent, zIndStart, options) {
+        const opts = options || {};
         this.parent = parent;
         this.parent.classList.add("destroyer-parent");
         this.volume = 1;
-        this.particleLimit = options.particleLimit || 100;
+        this.particleLimit = opts.particleLimit || 25;
         this.isFiring = false;
         // generate weapon objects and set default
         this.weaponsList = weaponFactory(this);
