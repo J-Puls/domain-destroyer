@@ -1,11 +1,14 @@
 export const machinegun = {
     name: "machinegun",
-    fireRate: 85,
+    fireRate: 75,
     animatedParticle: true,
-    particleOffset: { x: -150, y: -150 },
+    cursorOffset: { x: -75, y: -125 },
+    particleOffset: { x: -75, y: -125 },
     spriteFrames: 3,
+    spriteW: 196,
+    spriteH: 196,
     animationCount: "infinite",
-    particleAnimationDuration: 250,
+    particleAnimationDuration: 350,
 };
 export default machinegun;
 //# sourceMappingURL=MachineGun.js.map

@@ -35,7 +35,9 @@ export class Destroyer {
         this.updateCSS = () => {
             const wpn = this.currentWeapon;
             parent.style.setProperty("--fire-rate", `${wpn.fireRate}ms`);
-            parent.style.setProperty("--frames", `${wpn.spriteFrames <= 2 ? wpn.spriteFrames - 1 : wpn.spriteFrames}`);
+            parent.style.setProperty("--wpn-sprite-frames", `${wpn.spriteFrames <= 2 ? wpn.spriteFrames - 1 : wpn.spriteFrames}`);
+            parent.style.setProperty("--wpn-sprite-w", `${wpn.spriteW}px`);
+            parent.style.setProperty("--wpn-sprite-h", `${wpn.spriteH}px`);
             parent.style.setProperty("--animation-count", `${wpn.animationCount}`);
             parent.style.setProperty("--wpn-sprite-url", `url(${wpn.sprites.cursor})`);
         };
@@ -89,8 +91,8 @@ export class Destroyer {
         const handleMouseMove = (e) => {
             this.mousePos.x = e.clientX;
             this.mousePos.y = e.clientY;
-            parent.style.setProperty("--wpn-sprite-x", `${e.clientX - 75}px`);
-            parent.style.setProperty("--wpn-sprite-y", `${e.clientY - 75}px`);
+            parent.style.setProperty("--wpn-sprite-x", `${e.clientX + this.currentWeapon.cursorOffset.x}px`);
+            parent.style.setProperty("--wpn-sprite-y", `${e.clientY + this.currentWeapon.cursorOffset.y}px`);
         };
         // begins firing
         const handleMouseDown = () => {
@@ -174,6 +176,7 @@ export class Destroyer {
         this.inject = () => {
             // force parent relative to align layers and remove the default cursor
             parent.style.position = "fixed";
+            parent.style.zIndex = `${zIndStart}`;
             parent.style.cursor = "none";
             // set up CSS variables
             this.updateCSS();

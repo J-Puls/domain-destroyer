@@ -1,35 +1,26 @@
+import Particle from "./Particle";
+
 export class ParticleGenerator {
   generate: Function;
-  viewFrame: HTMLDivElement;
-  spriteRenderer: HTMLDivElement;
-  game;
-  constructor(game) {
+
+  constructor(weapon, game) {
     // returns the elements to render a particle
-    this.generate = (
-      weapon,
-      partNum: number,
-      coords: { x: number; y: number }
-    ) => {
-      // create the sprite view frame
-      this.viewFrame = document.createElement("div");
-      this.viewFrame.id = "destroyer-particle-sprite-view-frame";
-      this.viewFrame.className = `destroyer-sprite particle-sprite-view-frame`;
-      this.viewFrame.style.zIndex = `${game.zIndStart + 1}`;
-      this.viewFrame.style.top = `${coords.y - 75 + weapon.particleOffset.y}px`;
-      this.viewFrame.style.left = `${
-        coords.x - 75 + weapon.particleOffset.x
-      }px`;
+    this.generate = (coords) => {
+      const particleNumber = Math.floor(
+        Math.random() * weapon.sprites.particles.length
+      );
 
-      // create the spritesheet renderer
-      this.spriteRenderer = document.createElement("div");
-      this.spriteRenderer.id = "destroyer-particle-spriteRenderer";
-      this.spriteRenderer.className = `destroyer-sprite particle-sprite-renderer`;
-      this.spriteRenderer.style.backgroundImage = `url(${weapon.sprites.particles[partNum]})`;
-      this.spriteRenderer.style.zIndex = `${game.zIndStart + 2}`;
-
-      // pack the renderer into the view frame
-      this.viewFrame.appendChild(this.spriteRenderer);
-      return this.viewFrame;
+      const sprites = {
+        animated: weapon.sprites.particles[particleNumber],
+        static: weapon.sprites.staticParticles[particleNumber],
+      };
+      return new Particle(
+        game,
+        coords,
+        weapon.particleOffset,
+        `${weapon.sfx[Math.floor(Math.random() * weapon.sfx.length)]}`,
+        sprites
+      );
     };
   }
 }

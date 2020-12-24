@@ -1,8 +1,10 @@
 :root {
   --wpn-sprite-x: 50%;
   --wpn-sprite-y: 50%;
+  --wpn-sprite-w: 0;
+  --wpn-sprite-h: 0;
   --wpn-sprite-url: none;
-  --frames: 1;
+  --wpn-sprite-frames: 1;
   --fire-rate: 1;
 }
 
@@ -24,7 +26,10 @@
     background-position: 0px;
   }
   100% {
-    background-position: calc(-150px * (var(--frames)));
+    background-position: calc(
+      var(--wpn-sprite-w) * (var(--wpn-sprite-frames) * -1)
+    );
+    /* background-position: -588px; */
   }
 }
 
@@ -39,16 +44,16 @@
 
 .weapon-sprite-view-frame {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: var(--wpn-sprite-w);
+  height: var(--wpn-sprite-h);
   left: var(--wpn-sprite-x);
   top: var(--wpn-sprite-y);
   overflow: hidden;
 }
 
 .weapon-sprite-renderer {
-  height: 150px;
-  width: calc(150px * var(--frames));
+  height: var(--wpn-sprite-h);
+  width: calc(var(--wpn-sprite-w) * var(--wpn-sprite-frames));
   background-image: var(--wpn-sprite-url);
   background-repeat: no-repeat;
   position: absolute;
@@ -65,9 +70,10 @@
 }
 
 .sprite-layer.animating > .weapon-sprite-view-frame > .weapon-sprite-renderer {
-  -webkit-animation: cursor var(--fire-rate) steps(calc(var(--frames))) normal
-    forwards;
-  animation: cursor var(--fire-rate) steps(calc(var(--frames))) normal forwards;
+  -webkit-animation: cursor var(--fire-rate)
+    steps(calc(var(--wpn-sprite-frames))) normal forwards;
+  animation: cursor var(--fire-rate) steps(calc(var(--wpn-sprite-frames)))
+    normal forwards;
   -webkit-animation-iteration-count: var(--animation-count);
   animation-iteration-count: var(--animation-count);
 }

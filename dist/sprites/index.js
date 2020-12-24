@@ -4,6 +4,7 @@ import machinegun from "./machinegun";
 import machinegunParticles from "./machinegunParticles";
 import stamp from "./stamp";
 import stampParticles from "./stampParticles";
+// import zapper from "./zapper";
 import staticSprites from "./staticSprites";
 const sprites = {
     hammer: {

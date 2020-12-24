@@ -55,6 +55,13 @@ const staticSprites = {
     stamp_9,
     stamp_10,
   ],
+  zapper: [
+    bulletHole_1,
+    bulletHole_2,
+    bulletHole_3,
+    bulletHole_4,
+    bulletHole_5,
+  ],
 };
 
 export default staticSprites;

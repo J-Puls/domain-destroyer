@@ -1,11 +1,20 @@
+export type Coordinates2D = {
+  x: number;
+  y: number;
+};
+
 export type WeaponOptions = {
   animatedParticle: boolean;
   animationCount: number;
   fireRate: number;
   name: string;
   particleAnimationDuration: number;
-  particleOffset: { x: number; y: number };
+  particleOffset: Coordinates2D;
+  playSoundOn: number;
   spriteFrames: number;
+  spriteH: number;
+  spriteW: number;
+  cursorOffset: Coordinates2D;
 };
 
 export type WeaponDetails = {

@@ -7,4 +7,5 @@ export default {
   hammer: [hammer_1, hammer_2],
   machinegun: [machinegun_1],
   stamp: [stamp_1],
+  // zapper: [machinegun_1],
 };

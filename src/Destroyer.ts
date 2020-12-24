@@ -1,6 +1,7 @@
 import Weapon from "./Weapon";
 import weaponFactory from "./weaponFactory";
 import { Howler } from "howler";
+import { Coordinates2D } from "./types";
 
 export class Destroyer {
   clear: Function;
@@ -15,7 +16,7 @@ export class Destroyer {
   handleMouseUp: Function;
   inject: Function;
   isFiring: boolean;
-  mousePos: { x: number; y: number };
+  mousePos: Coordinates2D;
   parent: HTMLElement;
   particleLayer: HTMLDivElement;
   particleLimit: number;
@@ -72,9 +73,11 @@ export class Destroyer {
       const wpn = this.currentWeapon;
       parent.style.setProperty("--fire-rate", `${wpn.fireRate}ms`);
       parent.style.setProperty(
-        "--frames",
+        "--wpn-sprite-frames",
         `${wpn.spriteFrames <= 2 ? wpn.spriteFrames - 1 : wpn.spriteFrames}`
       );
+      parent.style.setProperty("--wpn-sprite-w", `${wpn.spriteW}px`);
+      parent.style.setProperty("--wpn-sprite-h", `${wpn.spriteH}px`);
       parent.style.setProperty("--animation-count", `${wpn.animationCount}`);
       parent.style.setProperty(
         "--wpn-sprite-url",
@@ -137,13 +140,20 @@ export class Destroyer {
     const handleMouseMove = (e: MouseEvent) => {
       this.mousePos.x = e.clientX;
       this.mousePos.y = e.clientY;
-      parent.style.setProperty("--wpn-sprite-x", `${e.clientX - 75}px`);
-      parent.style.setProperty("--wpn-sprite-y", `${e.clientY - 75}px`);
+      parent.style.setProperty(
+        "--wpn-sprite-x",
+        `${e.clientX + this.currentWeapon.cursorOffset.x}px`
+      );
+      parent.style.setProperty(
+        "--wpn-sprite-y",
+        `${e.clientY + this.currentWeapon.cursorOffset.y}px`
+      );
     };
 
     // begins firing
     const handleMouseDown = () => {
       this.isFiring = true;
+
       // tell CSS to animate the cursor
       this.cursorLayer.classList.add("animating");
 
@@ -164,6 +174,7 @@ export class Destroyer {
     // ceases firing
     const handleMouseUp = (interval?) => {
       this.isFiring = false;
+
       // tell CSS to stop animating
       this.cursorLayer.classList.remove("animating");
 
@@ -231,6 +242,7 @@ export class Destroyer {
     this.inject = () => {
       // force parent relative to align layers and remove the default cursor
       parent.style.position = "fixed";
+      parent.style.zIndex = `${zIndStart}`;
       parent.style.cursor = "none";
       // set up CSS variables
       this.updateCSS();
