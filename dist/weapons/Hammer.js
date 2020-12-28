@@ -9,6 +9,7 @@ export const hammer = {
     spriteH: 149,
     animationCount: 1,
     particleAnimationDuration: 250,
+    particleSpriteDimensions: { w: 150, h: 150 },
 };
 export default hammer;
 //# sourceMappingURL=Hammer.js.map

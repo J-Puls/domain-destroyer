@@ -1,29 +1,31 @@
 import { WeaponObject } from "./interfaces";
 import ParticleGenerator from "./ParticleGenerator";
-import { WeaponOptions, Coordinates2D } from "./types";
+import { WeaponOptions, Coordinates2D, Dimensions2D } from "./types";
 import { sleep } from "./utils/sleep";
 import { Howl } from "howler";
 
 export class Weapon implements WeaponObject {
   animatedParticle: boolean;
   animationCount: number;
-  spriteRenderer: HTMLDivElement;
-  fireRate: number;
-  spawn: Function;
-  name: string;
   cursorOffset: Coordinates2D;
-  particleOffset: Coordinates2D;
-  viewFrame: HTMLDivElement;
-  sfx: string[];
-  spriteFrames: number;
-  spriteW: number;
-  spriteH: number;
-  sprites: { cursor: string; particles: string[]; staticParticles: string[] };
+  damagePoints: number;
+  fire: Function;
+  fireRate: number;
+  generateSoundEffect: Function;
+  getStereoLocation: Function;
+  name: string;
   particleAnimationDuration: number;
   particleGenerator: ParticleGenerator;
-  generateSoundEffect: Function;
-  fire: Function;
-  getStereoLocation: Function;
+  particleOffset: Coordinates2D;
+  particleSpriteDimensions: Dimensions2D;
+  sfx: string[];
+  spawn: Function;
+  spriteFrames: number;
+  spriteH: number;
+  spriteRenderer: HTMLDivElement;
+  spriteW: number;
+  sprites: { cursor: string; particles: string[]; staticParticles: string[] };
+  viewFrame: HTMLDivElement;
 
   constructor(game, sfx, sprites, options: WeaponOptions) {
     this.animatedParticle = options.animatedParticle || false;
@@ -37,7 +39,12 @@ export class Weapon implements WeaponObject {
     this.sprites = { ...sprites };
     this.spriteW = options.spriteW;
     this.spriteH = options.spriteH;
+    this.damagePoints = options.damagePoints || 1;
     this.cursorOffset = options.cursorOffset || { x: 0, y: 0 };
+    this.particleSpriteDimensions = options.particleSpritDimensions || {
+      w: 150,
+      h: 150,
+    };
     this.particleGenerator = new ParticleGenerator(this, game);
 
     // create the sprite view frame
@@ -58,8 +65,7 @@ export class Weapon implements WeaponObject {
 
     // fires a single shot
     this.fire = async () => {
-      // grab the current cursor position
-      const coords = { ...game.mousePos };
+      const coords = { ...game.mousePos }; // grab the current cursor position
 
       // generate the particles to be rendered
       const particle = this.particleGenerator.generate(coords);
@@ -68,10 +74,7 @@ export class Weapon implements WeaponObject {
 
       particle.playSoundEffect();
 
-      if (this.animatedParticle) {
-      }
-      // render the animated sprite
-      game.particleLayer.appendChild(aParticle);
+      game.particleLayer.appendChild(aParticle); // render the animated sprite
 
       // wait for the animation to finish, then remove the animated sprite
       await sleep(this.particleAnimationDuration);
@@ -83,6 +86,8 @@ export class Weapon implements WeaponObject {
         coords.x + this.particleOffset.x - 75,
         coords.y + this.particleOffset.y - 75
       );
+      game.pageHealth -= this.damagePoints; // decrement page health by weapon's damage value
+      game.onDamage();
     };
   }
 }

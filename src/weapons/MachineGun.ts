@@ -9,5 +9,6 @@ export const machinegun = {
   spriteH: 196,
   animationCount: "infinite",
   particleAnimationDuration: 350,
+  particleSpriteDimensions: { w: 150, h: 150 },
 };
 export default machinegun;

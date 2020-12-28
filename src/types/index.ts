@@ -3,18 +3,25 @@ export type Coordinates2D = {
   y: number;
 };
 
+export type Dimensions2D = {
+  w: number;
+  h: number;
+};
+
 export type WeaponOptions = {
   animatedParticle: boolean;
   animationCount: number;
+  cursorOffset: Coordinates2D;
+  damagePoints: number;
   fireRate: number;
   name: string;
   particleAnimationDuration: number;
   particleOffset: Coordinates2D;
+  particleSpritDimensions: Dimensions2D;
   playSoundOn: number;
   spriteFrames: number;
   spriteH: number;
   spriteW: number;
-  cursorOffset: Coordinates2D;
 };
 
 export type WeaponDetails = {
@@ -22,4 +29,13 @@ export type WeaponDetails = {
   options?: WeaponOptions;
   sfx: string[];
   sprites: { cursor: string; particles: string[]; staticParticles: string[] };
+};
+
+export type DestroyerOptions = {
+  defaultVolume: number;
+  onDamage: Function;
+  pageHealth: number;
+  particleLimit: number;
+  volumeChangeDelta: number;
+  zIndexStart: number;
 };

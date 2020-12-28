@@ -8,7 +8,7 @@ export class ParticleGenerator {
                 animated: weapon.sprites.particles[particleNumber],
                 static: weapon.sprites.staticParticles[particleNumber],
             };
-            return new Particle(game, coords, weapon.particleOffset, `${weapon.sfx[Math.floor(Math.random() * weapon.sfx.length)]}`, sprites);
+            return new Particle(game.parent.clientWidth, weapon.particleSpriteDimensions, coords, weapon.particleOffset, `${weapon.sfx[Math.floor(Math.random() * weapon.sfx.length)]}`, sprites);
         };
     }
 }

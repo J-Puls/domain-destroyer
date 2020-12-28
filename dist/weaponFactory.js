@@ -2,6 +2,7 @@ import Weapon from "./Weapon";
 import sprites from "./sprites";
 import sounds from "./sounds";
 import weaponData from "./weapons";
+/** Compiles a list of weapon objects */
 export const weaponFactory = (game) => {
     const weaponsList = [];
     for (const name of Object.keys(weaponData)) {

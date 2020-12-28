@@ -9,6 +9,7 @@ export const stamp = {
     spriteH: 255,
     animationCount: 1,
     particleAnimationDuration: 25,
+    particleSpriteDimensions: { w: 150, h: 150 },
 };
 export default stamp;
 //# sourceMappingURL=Stamp.js.map
