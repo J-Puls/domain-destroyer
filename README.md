@@ -1,6 +1,6 @@
 # domain-destroyer
 
-A modern recreation of the timeless Desktop Destroyer game developed by Miroslav Němeček, written in TypeScript.
+A modern recreation of the timeless Desktop Destroyer game developed by Miroslav Němeček, written in TypeScript for the web.
 
 ## Controls
 
@@ -16,12 +16,22 @@ A modern recreation of the timeless Desktop Destroyer game developed by Miroslav
 | `; key` | **volume down**     |
 | `' key` | **volume up**       |
 
+<hr/>
 ## Installation
 
 ```bash
 npm i domain-destroyer
 ```
 
+or
+
+[clone the repository](https://github.com/J-Puls/domain-destroyer.git) and compile the TypeScript yourself with
+
+```bash
+npm run build
+```
+
+<hr/>
 ## Setup
 
 - Import the `Destroyer` constructor
@@ -36,16 +46,26 @@ import Destroyer from "domain-destroyer";
 import "domain-destroyer/dist/css/destroyer.min.css";
 ```
 
-## API Description
+<hr/>
+## API
 
-The **`Destroyer`** constructor takes three arguments:
+The **`Destroyer`** constructor takes two arguments:
 
 - **`parent`**: `HTMLDivElement` - the element to act as the bounding container for the game contents
 
-- **`zIndStart`**: `number` - the z-index that the components should begin layering at
-
 - **`options`**: `object` - optional parameters for controlling different aspects of the game upon instantiation
+
+  - **`defaultVolume`**: `number (0 - 1)` - the initial volume
+
+  - **`onDamage`**: `(pageHealth) => {}` - a callback function that will be called when a weapon _"inflicts damage"_ to the page
+
+  - **`pageHealth`**: `number` - the total amount of _"health"_ the page has (this is decremented every time a weapon fires)
+
   - **`particleLimit`**: `number` - the maximum number of particles allowed to exist at one time (only effects the animation phase of rendering, not how many particles are persisted on screen)
+
+  - **`volumeChangeDelta`**: `number (0 - 1)` - how much the volume is incremented / decremented when calling `volumeUp()` or `volumeDown()`
+
+  - **`zIndexStart`**: `number` - the z-index at which game elements should begin layering
 
 Once instantiated, you will have access to the following noteworthy properties and methods:
 
@@ -67,6 +87,7 @@ Once instantiated, you will have access to the following noteworthy properties a
 | **`weaponDown()`**    | sets the current weapon to the previous in the list                                                                                                           |
 | **`weaponUp()`**      | sets the current weapon to the next in the list                                                                                                               |
 
+<hr/>
 ## Usage
 
 1. Save your desired parent container to a variable
@@ -75,37 +96,49 @@ Once instantiated, you will have access to the following noteworthy properties a
 const myParent = document.querySelector("#myParent");
 ```
 
-2. Create an instance of the `Destroyer` object, passing it the `parent`, `zIndStart`, and optionally `options` arguments
+2. Create an instance of the `Destroyer` object, passing it the `parent` and `options` arguments
 
 3. Inject the `Destroyer` game components into your selected parent container using the `inject()` method
 
 ```javascript
-const myDestroyer = new Destroyer(myParent, 5, { particleLimit: 20 });
+const options = { particleLimit: 20, zIndexStart: 5 };
+
+const myDestroyer = new Destroyer(myParent, options);
 
 myDestroyer.inject();
 ```
 
-## Example
+### Example
 
-Below is an example use case in a `React` component.
+Below is an example of how to use domain-destroyer in a **`React`** component.
 
 ```javascript
 import React, { useEffect, useState } from "react";
 import Destroyer from "domain-destroyer";
 import "domain-destroyer/dist/css/destroyer.min.css";
-import "./App.css";
 
-export const App = () => {
+const App = () => {
   let myParent;
   const [destroyer, setDestroyer] = useState(null);
+
+  const options = {
+    defaultVolume: 0.5,
+    particleLimit: 20,
+    zIndexStart: 5,
+    onDamage: (pageHealth) => console.log(pageHealth),
+    pageHealth: 200,
+    volumeChangeDelta: 0.5,
+  };
+
   useEffect(() => {
-    myParent && setDestroyer(new Destroyer(myParent, 5, { particleLimit: 20 }));
+    myParent && setDestroyer(new Destroyer(myParent, options));
   }, [myParent]);
 
   useEffect(() => {
     destroyer && destroyer.inject();
   }, [destroyer]);
-  return <div className="myParent" ref={(el) => (myParent = el)}></div>;
+
+  return <div className="myParent" ref={(el) => (myParent = el)} />;
 };
 
 export default App;
