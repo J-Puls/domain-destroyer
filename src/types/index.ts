@@ -24,13 +24,6 @@ export type WeaponOptions = {
   spriteW: number;
 };
 
-export type WeaponDetails = {
-  game;
-  options?: WeaponOptions;
-  sfx: string[];
-  sprites: { cursor: string; particles: string[]; staticParticles: string[] };
-};
-
 export type DestroyerOptions = {
   defaultVolume: number;
   onDamage: Function;

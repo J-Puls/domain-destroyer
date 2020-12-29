@@ -1,1 +1,104 @@
-:root{--wpn-sprite-x:50%;--wpn-sprite-y:50%;--wpn-sprite-w:0;--wpn-sprite-h:0;--wpn-sprite-url:none;--wpn-sprite-frames:1;--fire-rate:1;--z-index-start:1}.destroyer-parent{height:100%;position:fixed}.destroyer-container{width:100%;height:100%;position:fixed;top:0;left:0}@keyframes cursor{0%{background-position:0}100%{background-position:calc(var(--wpn-sprite-w) * (var(--wpn-sprite-frames) * -1))}}@keyframes particle{0%{background-position:0}100%{background-position:-750px}}.sprite-layer{user-select:none;z-index:calc(var(--z-index-start) + 2)}.weapon-sprite-view-frame{position:relative;width:var(--wpn-sprite-w);height:var(--wpn-sprite-h);left:var(--wpn-sprite-x);top:var(--wpn-sprite-y);overflow:hidden;z-index:calc(var(--z-index-start) + 3)}.weapon-sprite-renderer{height:var(--wpn-sprite-h);width:calc(var(--wpn-sprite-w) * var(--wpn-sprite-frames));background-image:var(--wpn-sprite-url);background-repeat:no-repeat;position:absolute;-ms-interpolation-mode:nearest-neighbor;image-rendering:-webkit-optimize-contrast;image-rendering:-moz-crisp-edges;image-rendering:-o-pixelated;image-rendering:pixelated;pointer-events:none;z-index:calc(var(--z-index-start) + 4)}.sprite-layer.animating>.weapon-sprite-view-frame>.weapon-sprite-renderer{-webkit-animation:cursor var(--fire-rate) steps(calc(var(--wpn-sprite-frames))) normal forwards;animation:cursor var(--fire-rate) steps(calc(var(--wpn-sprite-frames))) normal forwards;-webkit-animation-iteration-count:var(--animation-count);animation-iteration-count:var(--animation-count)}.particle-layer{z-index:calc(var(--z-index-start) + 1)}.particle-sprite-view-frame{position:absolute;width:150px;height:150px;overflow:hidden;z-index:calc(var(--z-index-start) + 1)}.particle-sprite-renderer{height:150px;width:900px;background-repeat:no-repeat;position:absolute;-ms-interpolation-mode:nearest-neighbor;image-rendering:-webkit-optimize-contrast;image-rendering:-moz-crisp-edges;image-rendering:-o-pixelated;image-rendering:pixelated;pointer-events:none;-webkit-animation:particle .25s steps(5) normal forwards;animation:particle .25s steps(5) normal forwards;-webkit-animation-iteration-count:1;animation-iteration-count:1;z-index:calc(var(--z-index-start) + 2)}.drawing-layer{z-index:var(--z-index-start)}
+:root {
+  --wpn-sprite-x: 50%;
+  --wpn-sprite-y: 50%;
+  --wpn-sprite-w: 0;
+  --wpn-sprite-h: 0;
+  --wpn-sprite-url: none;
+  --wpn-sprite-frames: 1;
+  --fire-rate: 1;
+  --z-index-start: 1;
+}
+.destroyer-parent {
+  height: 100%;
+  position: fixed;
+}
+.destroyer-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+@keyframes cursor {
+  0% {
+    background-position: 0;
+  }
+  100% {
+    background-position: calc(
+      var(--wpn-sprite-w) * (var(--wpn-sprite-frames) * -1)
+    );
+  }
+}
+@keyframes particle {
+  0% {
+    background-position: 0;
+  }
+  100% {
+    background-position: -750px;
+  }
+}
+.sprite-layer {
+  user-select: none;
+  z-index: calc(var(--z-index-start) + 2);
+}
+.weapon-sprite-view-frame {
+  position: relative;
+  width: var(--wpn-sprite-w);
+  height: var(--wpn-sprite-h);
+  left: var(--wpn-sprite-x);
+  top: var(--wpn-sprite-y);
+  overflow: hidden;
+  z-index: calc(var(--z-index-start) + 3);
+}
+.weapon-sprite-renderer {
+  height: var(--wpn-sprite-h);
+  width: calc(var(--wpn-sprite-w) * var(--wpn-sprite-frames));
+  background-image: var(--wpn-sprite-url);
+  background-repeat: no-repeat;
+  position: absolute;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-pixelated;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: calc(var(--z-index-start) + 4);
+}
+.sprite-layer.animating > .weapon-sprite-view-frame > .weapon-sprite-renderer {
+  -webkit-animation: cursor var(--fire-rate)
+    steps(calc(var(--wpn-sprite-frames))) normal forwards;
+  animation: cursor var(--fire-rate) steps(calc(var(--wpn-sprite-frames)))
+    normal forwards;
+  -webkit-animation-iteration-count: var(--animation-count);
+  animation-iteration-count: var(--animation-count);
+}
+.particle-layer {
+  z-index: calc(var(--z-index-start) + 1);
+}
+.particle-sprite-view-frame {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  z-index: calc(var(--z-index-start) + 1);
+}
+.particle-sprite-renderer {
+  height: 150px;
+  width: 900px;
+  background-repeat: no-repeat;
+  position: absolute;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-pixelated;
+  image-rendering: pixelated;
+  pointer-events: none;
+  -webkit-animation: particle 0.25s steps(5) normal forwards;
+  animation: particle 0.25s steps(5) normal forwards;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+  z-index: calc(var(--z-index-start) + 2);
+}
+.drawing-layer {
+  z-index: var(--z-index-start);
+}

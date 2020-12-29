@@ -2,6 +2,7 @@ import ParticleGenerator from "./ParticleGenerator";
 import { sleep } from "./utils/sleep";
 export class Weapon {
     constructor(game, sfx, sprites, options) {
+        this.game = game;
         this.animatedParticle = options.animatedParticle || false;
         this.animationCount = options.animationCount || 1;
         this.fireRate = options.fireRate || 1;
@@ -28,28 +29,28 @@ export class Weapon {
         this.spriteRenderer = document.createElement("div");
         this.spriteRenderer.id = "destroyer-weapon-sprite-renderer";
         this.spriteRenderer.className = `destroyer-sprite weapon-sprite-renderer`;
-        // pack the renderer into the view frame
-        this.spawn = () => {
-            this.viewFrame.appendChild(this.spriteRenderer);
-            return this.viewFrame;
-        };
-        // fires a single shot
-        this.fire = async () => {
-            const coords = Object.assign({}, game.mousePos); // grab the current cursor position
-            // generate the particles to be rendered
-            const particle = this.particleGenerator.generate(coords);
-            const aParticle = particle.getAnimatedContent();
-            const sParticle = particle.getStaticContent();
-            particle.playSoundEffect();
-            game.particleLayer.appendChild(aParticle); // render the animated sprite
-            // wait for the animation to finish, then remove the animated sprite
-            await sleep(this.particleAnimationDuration);
-            game.particleLayer.removeChild(aParticle);
-            // replace the animated sprite with a persisted image on the canvas
-            game.drawingCTX.drawImage(sParticle, coords.x + this.particleOffset.x - 75, coords.y + this.particleOffset.y - 75);
-            game.pageHealth -= this.damagePoints; // decrement page health by weapon's damage value
-            game.onDamage();
-        };
+    }
+    /** Pack the renderer into the frame and return content to be rendered */
+    spawn() {
+        this.viewFrame.appendChild(this.spriteRenderer);
+        return this.viewFrame;
+    }
+    /** Fire a single shot */
+    async fire() {
+        const coords = Object.assign({}, this.game.mousePos); // grab the current cursor position
+        // generate the particles to be rendered
+        const particle = this.particleGenerator.generate(coords);
+        const aParticle = particle.getAnimatedContent();
+        const sParticle = particle.getStaticContent();
+        particle.playSoundEffect();
+        this.game.particleLayer.appendChild(aParticle); // render the animated sprite
+        // wait for the animation to finish, then remove the animated sprite
+        await sleep(this.particleAnimationDuration);
+        this.game.particleLayer.removeChild(aParticle);
+        // replace the animated sprite with a persisted image on the canvas
+        this.game.drawingCTX.drawImage(sParticle, coords.x + this.particleOffset.x - 75, coords.y + this.particleOffset.y - 75);
+        this.game.pageHealth -= this.damagePoints; // decrement page health by weapon's damage value
+        this.game.onDamage();
     }
 }
 export default Weapon;

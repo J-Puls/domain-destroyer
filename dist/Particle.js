@@ -1,6 +1,8 @@
 import { Howl } from "howler";
 export class Particle {
     constructor(parentWidth, dimensions, coords, offset, sound, sprites) {
+        this.parentWidth = parentWidth;
+        this.sprites = sprites;
         // create the sprite view frame
         this.viewFrame = document.createElement("div");
         this.viewFrame.id = "destroyer-particle-sprite-view-frame";
@@ -12,29 +14,31 @@ export class Particle {
         this.spriteRenderer.id = "destroyer-particle-spriteRenderer";
         this.spriteRenderer.className = `destroyer-sprite particle-sprite-renderer`;
         this.spriteRenderer.style.backgroundImage = `url(${sprites.animated})`;
-        // calculate where the sound origin is relative to the center of the viewport (-1 to 1)
-        this.getStereoLocation = (coords) => {
-            const location = -((Math.round(parentWidth / 2) - coords.x) / parentWidth) * 2;
-            return location;
-        };
         // generate the sound effect for this particle
         this.soundEffect = new Howl({
             src: [sound],
             autoplay: true,
             stereo: this.getStereoLocation(coords),
         });
-        // returns th animated sprite
-        this.getAnimatedContent = () => {
-            this.viewFrame.appendChild(this.spriteRenderer); // pack the renderer into the view frame
-            return this.viewFrame;
-        };
-        // returns the image to be drawn to canvas
-        this.getStaticContent = () => {
-            const staticContent = new Image();
-            staticContent.src = sprites.static;
-            return staticContent;
-        };
-        this.playSoundEffect = () => this.soundEffect.play();
+    }
+    // calculate where the sound origin is relative to the center of the viewport (-1 to 1)
+    getStereoLocation(coords) {
+        const location = -((Math.round(this.parentWidth / 2) - coords.x) / this.parentWidth) * 2;
+        return location;
+    }
+    // returns th animated sprite
+    getAnimatedContent() {
+        this.viewFrame.appendChild(this.spriteRenderer); // pack the renderer into the view frame
+        return this.viewFrame;
+    }
+    // returns the image to be drawn to canvas
+    getStaticContent() {
+        const staticContent = new Image();
+        staticContent.src = this.sprites.static;
+        return staticContent;
+    }
+    playSoundEffect() {
+        this.soundEffect.play();
     }
 }
 export default Particle;
